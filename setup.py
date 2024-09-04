@@ -1,4 +1,4 @@
-"""Setup for EVM contract ABI get"""
+"""Setup for EVM contracts ABI get"""
 from setuptools import setup, find_packages
 
 with open(
