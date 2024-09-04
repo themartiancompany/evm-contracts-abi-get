@@ -21,7 +21,7 @@ _setup_kwargs={
   'package_data': {},
   'entry_points': {
     'console_scripts': [
-      'evm-contracts-abi-get = evm_contracts_abi_get:_main']
+      'evm-contracts-abi-get = functions:_main']
   },
   'install_requires': [
     'appdirs',
