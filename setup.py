@@ -7,7 +7,7 @@ with open(
   long_description = fh.read()
 
 _name = "evm-contracts-abi-get"
-_version = "0.0.0.0.0.0.0.0.0.0.0.0.1"
+_version = "0.0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1"
 _setup_kwargs={
   'name': f"{_name}",
   'version': f"{_version}",
@@ -17,22 +17,12 @@ _setup_kwargs={
   'long_description': long_description,
   'long_description_content_type': "text/markdown",
   'url': f"https://github.com/themartiancompany/{_name}",
-  'packages': find_packages(
-    include=[
-      'functions.*'
-    ]
-  ),
-  'package_data': {
-    'functions': [
-      'functions.py'
-    ],
-  },
+  'packages': find_packages(),
   'entry_points': {
     'console_scripts': [
-      'evm-contracts-abi-get = evm_contracts_abi_get.functions:_main']
+      'evm-contracts-abi-get = evm_contracts_abi_get:_main']
   },
   'install_requires': [
-    'appdirs',
     'aioetherscan',
   ],
   'classifiers': [
