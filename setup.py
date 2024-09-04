@@ -17,8 +17,16 @@ _setup_kwargs={
   'long_description': long_description,
   'long_description_content_type': "text/markdown",
   'url': f"https://github.com/themartiancompany/{_name}",
-  'packages': find_packages(),
-  'package_data': {},
+  'packages': find_packages(
+    include=[
+      'functions.*'
+    ]
+  ),
+  'package_data': {
+    'functions': [
+      'functions.py'
+    ],
+  },
   'entry_points': {
     'console_scripts': [
       'evm-contracts-abi-get = evm_contracts_abi_get.functions:_main']
