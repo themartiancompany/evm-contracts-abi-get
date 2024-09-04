@@ -24,7 +24,7 @@ def _file_read(
       _file,
       'r') as _file_handler:
         _content = _file_handler.read()
-  except FileNotFound as Exception:
+  except FileNotFoundException as Exception:
     print(
       f"ERROR: file '{_file}' not found")
   return _content
@@ -45,20 +45,24 @@ async def _client_get(
     retry_options=_retry_options)
   return _client
 
-def _abi_get(
+async def _abi_get(
   _contract_address,
   _etherscan_key,
   _verbose):
   if _verbose:
     print(
       f"INFO: Etherscan key: {_etherscan_key}")
-  _client = asyncio.run(
-    _client_get(
+  _client = await _client_get(
       _etherscan_key,
-      _verbose))
-  if _verbose:
-    print(
-      _client)
+      _verbose)
+  # if _verbose:
+  #   print(
+  #     _client)
+  _abi = await _client.contract.contract_abi(
+      _contract_address)
+  await _client.close()
+  return _abi
+  # return _client
 
 def _etherscan_key_get():
   return _path_join(
@@ -93,8 +97,11 @@ def _main():
     _args.etherscan_key,
     _args.verbose
   )
-  _abi_get(
-    *_abi_get_args)
+  _abi = asyncio.run(
+    _abi_get(
+      *_abi_get_args))
+  print(
+    _abi)
 
 if __name__ == "__main__":
   _main()
