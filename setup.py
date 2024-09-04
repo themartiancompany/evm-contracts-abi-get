@@ -6,7 +6,7 @@ with open(
   "r") as fh:
   long_description = fh.read()
 
-_name = "evm-contract-abi-get"
+_name = "evm-contracts-abi-get"
 _version = "0.0.0.0.0.0.0.0.0.0.0.0.1"
 _setup_kwargs={
   'name': f"{_name}",
@@ -21,7 +21,7 @@ _setup_kwargs={
   'package_data': {},
   'entry_points': {
     'console_scripts': [
-      'evm-contract-abi-get = evm_contract_abi_get:_main']
+      'evm-contracts-abi-get = evm_contracts_abi_get:_main']
   },
   'install_requires': [
     'appdirs',
