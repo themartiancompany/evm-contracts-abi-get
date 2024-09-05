@@ -31,13 +31,13 @@ def _file_read(
   return _content
 
 async def _client_get(
-  _etherscan_key_path,
+  _key_path,
   _network,
   _blockchain,
   _verbose):
   _client_kwargs={}
-  _etherscan_key = _file_read(
-    _etherscan_key_path)
+  _key = _file_read(
+    _key_path)
   _throttler_kwargs= {
     "rate_limit": 4,
     "period": 1.0
@@ -53,7 +53,7 @@ async def _client_get(
     "retry_options": _retry_options
   }
   _client = Client(
-    _etherscan_key,
+    _key,
     **_client_kwargs)
   return _client
 
@@ -61,15 +61,15 @@ async def _abi_get(
   _contract_address,
   _network,
   _blockchain,
-  _etherscan_key,
+  _key,
   _verbose):
   if _verbose:
     print(
       f"INFO: Connecting to {_network} ({_blockchain})")
     print(
-      f"INFO: Etherscan key: {_etherscan_key}")
+      f"INFO: Etherscan key: {_key}")
   _client = await _client_get(
-      _etherscan_key,
+      _key,
       _network,
       _blockchain,
       _verbose)
@@ -131,7 +131,7 @@ def _main():
     _args.contract_address,
     _args.network,
     _args.blockchain,
-    _args.etherscan_key,
+    _args.key,
     _args.verbose
   )
   _abi = asyncio.run(
