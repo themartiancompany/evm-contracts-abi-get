@@ -35,17 +35,26 @@ async def _client_get(
   _network,
   _blockchain,
   _verbose):
+  _client_kwargs={}
   _etherscan_key = _file_read(
     _etherscan_key_path)
+  _throttler_kwargs= {
+    "rate_limit": 4,
+    "period": 1.0
+  }
   _throttler = Throttler(
-    rate_limit=4,
-    period=1.0)
+    **_throttler_kwargs)
   _retry_options = ExponentialRetry(
     attempts=2)
+  _client_kwargs = {
+    "throttler": _throttler,
+    "api_kind": _network,
+    "network": _blockchain,
+    "retry_options": _retry_options
+  }
   _client = Client(
     _etherscan_key,
-    throttler=_throttler,
-    retry_options=_retry_options)
+    **_client_kwargs)
   return _client
 
 async def _abi_get(
@@ -60,9 +69,9 @@ async def _abi_get(
     print(
       f"INFO: Etherscan key: {_etherscan_key}")
   _client = await _client_get(
+      _etherscan_key,
       _network,
       _blockchain,
-      _etherscan_key,
       _verbose)
   # if _verbose:
   #   print(
@@ -73,7 +82,7 @@ async def _abi_get(
   return _abi
   # return _client
 
-def _etherscan_key_get():
+def _key_get():
   return _path_join(
     Path.home(), # _user_home_get("-"),
     ".config/etherscan/default.txt")
@@ -83,18 +92,22 @@ def _main():
   _arguments = [
     [("contract_address", ),
      {"type": str,
-      "help": 'absolute path of input file'}],
-    [("--etherscan-key", ),
+      "help": 'address of the contract to get the ABI of'}],
+    [("--key", ),
      {'action': "store",
       "type": str,
-      "default": _etherscan_key_get(),
-      "help": 'absolute path of etherscan key'}],
+      "default": _key_get(),
+      "help": ('absolute path of api key'
+               'of an etherscan-scan like service')}],
     [("--network", ),
      {'action': "store",
       "type": str,
       "default": 'main',
       "help": ('network to connect to'
-               '(eth, bsc, avax, polygon, optimism, base, arbitrum, fantom, taiko, snowscan)')}],
+               '(eth, bsc, avax, polygon,'
+               'optimism, base, arbitrum,'
+               'fantom, taiko, snowscan,'
+               'gnosis)')}],
     [("--blockchain", ),
      {'action': "store",
       "type": str,
