@@ -7,7 +7,7 @@ with open(
   long_description = fh.read()
 
 _name = "evm-contracts-abi-get"
-_version = "0.0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1"
+_version = "0.0.0.0.0.0.0.0.0.0.0.1"
 _setup_kwargs={
   'name': f"{_name}",
   'version': f"{_version}",
