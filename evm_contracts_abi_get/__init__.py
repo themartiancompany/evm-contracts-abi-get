@@ -24,13 +24,16 @@ def _file_read(
       _file,
       'r') as _file_handler:
         _content = _file_handler.read()
-  except FileNotFoundException as Exception:
+  except FileNotFoundError as Exception:
     print(
       f"ERROR: file '{_file}' not found")
+    exit
   return _content
 
 async def _client_get(
   _etherscan_key_path,
+  _network,
+  _blockchain,
   _verbose):
   _etherscan_key = _file_read(
     _etherscan_key_path)
@@ -47,12 +50,18 @@ async def _client_get(
 
 async def _abi_get(
   _contract_address,
+  _network,
+  _blockchain,
   _etherscan_key,
   _verbose):
   if _verbose:
     print(
+      f"INFO: Connecting to {_network} ({_blockchain})")
+    print(
       f"INFO: Etherscan key: {_etherscan_key}")
   _client = await _client_get(
+      _network,
+      _blockchain,
       _etherscan_key,
       _verbose)
   # if _verbose:
@@ -75,11 +84,24 @@ def _main():
     [("contract_address", ),
      {"type": str,
       "help": 'absolute path of input file'}],
-    [("--etherscan_key", ),
+    [("--etherscan-key", ),
      {'action': "store",
       "type": str,
       "default": _etherscan_key_get(),
       "help": 'absolute path of etherscan key'}],
+    [("--network", ),
+     {'action': "store",
+      "type": str,
+      "default": 'main',
+      "help": ('network to connect to'
+               '(eth, bsc, avax, polygon, optimism, base, arbitrum, fantom, taiko, snowscan)')}],
+    [("--blockchain", ),
+     {'action': "store",
+      "type": str,
+      "default": 'main',
+      "help": ('blockchain to connect to'
+               "(main, ropstein, kovan, rinkeby,"
+               "goerli, sepolia, testnet, nova, hekla)")}],
     [("--verbose", ),
      {'dest': "verbose",
       'action': "store_true",
@@ -94,6 +116,8 @@ def _main():
   _args = _parser.parse_args()
   _abi_get_args = (
     _args.contract_address,
+    _args.network,
+    _args.blockchain,
     _args.etherscan_key,
     _args.verbose
   )
