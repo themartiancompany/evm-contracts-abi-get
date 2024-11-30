@@ -37,7 +37,8 @@ def _file_write(
     with open(
       _file,
       'w') as _file_handler:
-        _content = _file_handler.write()
+        _file_handler.write(
+          _content)
   except FileNotFoundError as Exception:
     print(
       f"ERROR: file '{_file}' not found")
