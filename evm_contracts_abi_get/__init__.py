@@ -30,6 +30,20 @@ def _file_read(
     exit
   return _content
 
+def _file_write(
+  _file,
+  _content):
+  try:
+    with open(
+      _file,
+      'w') as _file_handler:
+        _content = _file_handler.write()
+  except FileNotFoundError as Exception:
+    print(
+      f"ERROR: file '{_file}' not found")
+    exit
+  return True
+
 async def _client_get(
   _key_path,
   _network,
@@ -97,24 +111,30 @@ def _main():
      {'action': "store",
       "type": str,
       "default": _key_get(),
-      "help": ('absolute path of api key'
-               'of an etherscan-scan like service')}],
+      "help": ('absolute path of api key '
+               'of an etherscan/blockscout-like service')}],
     [("--network", ),
      {'action': "store",
       "type": str,
       "default": 'main',
-      "help": ('network to connect to'
-               '(eth, bsc, avax, polygon,'
-               'optimism, base, arbitrum,'
-               'fantom, taiko, snowscan,'
+      "help": ('network to connect to '
+               '(eth, bsc, avax, polygon, '
+               'optimism, base, arbitrum, '
+               'fantom, taiko, snowscan, '
                'gnosis)')}],
     [("--blockchain", ),
      {'action': "store",
       "type": str,
       "default": 'main',
-      "help": ('blockchain to connect to'
-               "(main, ropstein, kovan, rinkeby,"
+      "help": ('blockchain to connect to '
+               "(main, ropstein, kovan, rinkeby, "
                "goerli, sepolia, testnet, nova, hekla)")}],
+    [("--output-file", ),
+     {'action': "store",
+      "type": str,
+      "default": '',
+      "help": ('path of the file in which to write '
+               "the retrieved contract ABI")}],
     [("--verbose", ),
      {'dest': "verbose",
       'action': "store_true",
@@ -137,8 +157,14 @@ def _main():
   _abi = asyncio.run(
     _abi_get(
       *_abi_get_args))
-  print(
-    _abi)
+  if ( _args.output_file != "" ):
+    _file_write(
+      _args.output_file,
+      _abi
+    )
+  else:
+    print(
+      _abi)
 
 if __name__ == "__main__":
   _main()
