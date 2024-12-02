@@ -23,7 +23,7 @@ _setup_kwargs={
       'evm-contracts-abi-get = evm_contracts_abi_get:_main']
   },
   'install_requires': [
-    'aioetherscan',
+    'aioetherscan >= 0.9.5.3',
   ],
   'classifiers': [
     "Programming Language :: Python :: 3",
