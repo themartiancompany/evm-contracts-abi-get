@@ -107,13 +107,13 @@ def _main():
   _arguments = [
     [("contract_address", ),
      {"type": str,
-      "help": 'address of the contract to get the ABI of'}],
+      "help": 'address of the contract to get the ABI of.'}],
     [("--key", ),
      {'action': "store",
       "type": str,
       "default": _key_get(),
       "help": ('absolute path of api key '
-               'of an etherscan/blockscout-like service')}],
+               'of an etherscan/blockscout-like service.')}],
     [("--network", ),
      {'action': "store",
       "type": str,
@@ -122,7 +122,8 @@ def _main():
                '(eth, bsc, avax, polygon, '
                'optimism, base, arbitrum, '
                'fantom, taiko, snowscan, '
-               'gnosis)')}],
+               'gnosis, kcc, ethw, etc, '
+               'doge, polygonzk, one)')}],
     [("--blockchain", ),
      {'action': "store",
       "type": str,
