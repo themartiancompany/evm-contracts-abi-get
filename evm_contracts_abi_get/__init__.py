@@ -11,6 +11,8 @@ from aioetherscan import Client
 from pathlib import Path
 # from os.path import expanduser as _user_home_get
 from os.path import join as _path_join
+from os.path import exists as _path_exists
+from sys import exit as sys_exit
 
 def _log_set():
   logging.basicConfig(
@@ -24,10 +26,12 @@ def _file_read(
       _file,
       'r') as _file_handler:
         _content = _file_handler.read()
-  except FileNotFoundError as Exception:
-    print(
+  except FileNotFoundError as exception:
+    sys_exit(
       f"ERROR: file '{_file}' not found")
-    exit
+  except Exception as exception:
+    sys_exit(
+      exception)
   return _content
 
 def _file_write(
@@ -40,10 +44,21 @@ def _file_write(
         _file_handler.write(
           _content)
   except FileNotFoundError as Exception:
-    print(
+    sys_exit(
       f"ERROR: file '{_file}' not found")
-    exit
   return True
+
+def _network_check(
+  _network,
+  _key):
+  _network_key_needed = [
+    'ethw'
+  ]
+  if ( _key == "" ):
+    if ( _network in _network_key_needed):
+      sys_exit(
+        f"ERROR: network {_network} requires an API key.")
+
 
 async def _client_get(
   _key_path,
@@ -51,8 +66,11 @@ async def _client_get(
   _blockchain,
   _verbose):
   _client_kwargs={}
-  _key = _file_read(
+  _key = _key_get(
     _key_path)
+  _network_check(
+    _network,
+    _key)
   _throttler_kwargs= {
     "rate_limit": 4,
     "period": 1.0
@@ -82,7 +100,7 @@ async def _abi_get(
     print(
       f"INFO: Connecting to {_network} ({_blockchain})")
     print(
-      f"INFO: Etherscan key: {_key}")
+      f"INFO: API key: {_key}")
   _client = await _client_get(
       _key,
       _network,
@@ -97,10 +115,21 @@ async def _abi_get(
   return _abi
   # return _client
 
-def _key_get():
+def _key_path_get():
   return _path_join(
     Path.home(), # _user_home_get("-"),
     ".config/etherscan/default.txt")
+
+def _key_get(
+  _path):
+  if _path_exists(
+       _path):
+    return _file_read(
+      _path)
+  else:
+    print(
+      f"WARNING: key file {_path} not found")
+    return ""
 
 def _main():
   _parser = ArgumentParser()
@@ -111,7 +140,7 @@ def _main():
     [("--key", ),
      {'action': "store",
       "type": str,
-      "default": _key_get(),
+      "default": _key_path_get(),
       "help": ('absolute path of api key '
                'of an etherscan/blockscout-like service.')}],
     [("--network", ),
