@@ -8,7 +8,7 @@ with open(
   long_description = fh.read()
 
 _name = "evm-contracts-abi-get"
-_version = "0.0.0.0.0.0.0.0.0.0.0.1.1.1.1"
+_version = "0.0.0.0.0.0.0.0.0.0.0.1.1.1.1.1.1"
 _setup_kwargs={
   'name': f"{_name}",
   'version': f"{_version}",
@@ -34,7 +34,7 @@ _setup_kwargs={
   ],
   'ext_modules':
     cythonize(
-      'evm_contract_abi_get/abi_get.pyx'),
+      'evm_contracts_abi_get/abi_get.pyx'),
 }
 setup(
   **_setup_kwargs)
