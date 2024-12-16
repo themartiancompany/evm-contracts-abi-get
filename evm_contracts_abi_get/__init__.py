@@ -92,28 +92,28 @@ def _main():
   _arguments = [
     [("contract_address", ),
      {"type": str,
-      "help": 'address of the contract to get the ABI of'}],
+      "help": 'Address of the contract to get the ABI of.'}],
     [("--key", ),
      {'action': "store",
       "type": str,
       "default": _key_get(),
-      "help": ('absolute path of api key'
+      "help": ('Absolute path of api key '
                'of an etherscan-scan like service')}],
     [("--network", ),
      {'action': "store",
       "type": str,
       "default": 'main',
-      "help": ('network to connect to'
-               '(eth, bsc, avax, polygon,'
-               'optimism, base, arbitrum,'
-               'fantom, taiko, snowscan,'
-               'gnosis)')}],
+      "help": ('Network to connect to '
+               '(eth, bsc, avax, polygon, '
+               'optimism, base, arbitrum, '
+               'fantom, taiko, snowscan, '
+               'gnosis).')}],
     [("--blockchain", ),
      {'action': "store",
       "type": str,
       "default": 'main',
-      "help": ('blockchain to connect to'
-               "(main, ropstein, kovan, rinkeby,"
+      "help": ('Blockchain to connect to'
+               "(main, ropstein, kovan, rinkeby, "
                "goerli, sepolia, testnet, nova, hekla)")}],
     [("--verbose", ),
      {'dest': "verbose",
