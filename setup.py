@@ -25,13 +25,13 @@ _setup_kwargs={
   },
   'install_requires': [
     'aioetherscan >= 0.9.6',
-    'cython'
+    'cython',
   ],
   'classifiers': [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Operating System :: Unix",
-  ]
+  ],
   'ext_modules':
     cythonize(
       'evm_contract_abi_get/abi_get.pyx'),
