@@ -127,9 +127,13 @@ def _key_get(
     return _file_read(
       _path)
   else:
+    _msg=(
+      f"WARNING: key file {_path} not found, "
+      "giving the client a kirsh."
+    )
     print(
-      f"WARNING: key file {_path} not found")
-    return ""
+      _msg)
+    return "kirshkey"
 
 def _main():
   _parser = ArgumentParser()
