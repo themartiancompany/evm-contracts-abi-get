@@ -27,7 +27,13 @@ Ethereum Virtual Machine (EVM) compatible network.
 
 This program is a software dependency for the
 [EVM Contracts Tools](
-  https://github.com/themartiancompany/evm-contracts-tools).
+  https://github.com/themartiancompany/evm-contracts-tools)
+and depends on
+[The Martian Company](
+  https://github.com/themartiancompany)'s
+fork of
+[Aioetherscan](
+  https://themartiancompany/aioetherscan).
 
 ## Installation
 
